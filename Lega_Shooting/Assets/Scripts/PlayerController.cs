@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     Vector3 rbVel;
     //public Opciones opciones;
     public bool move;
+    public int ammo;
     public GameObject[] weapons;
 
     void Start()
@@ -56,6 +57,13 @@ public class PlayerController : MonoBehaviour
             weapons[1].SetActive(false);
             weapons[2].SetActive(true);
         }
+        if (other.CompareTag("Gun"))
+        {
+            Destroy(other.gameObject);
+            weapons[0].SetActive(true);
+            weapons[1].SetActive(false);
+            weapons[2].SetActive(false);
+        }
     }
 
     private void PlayerMovement()
@@ -91,8 +99,7 @@ public class PlayerController : MonoBehaviour
 
             targetRotation.x = 0;
             targetRotation.z = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed);
-
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed);   
         }
     }
 

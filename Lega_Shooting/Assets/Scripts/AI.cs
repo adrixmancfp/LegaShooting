@@ -30,11 +30,12 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position); 
 
         if (distanceToPlayer <= distanceToFollowPlayer && followPlayer)
         {
             FollowPlayer();
+            transform.LookAt(player.transform.position);
         }
         else
         {

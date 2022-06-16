@@ -9,7 +9,9 @@ public class Gun_Controller : MonoBehaviour
     public GameObject bullet;
     private Transform bulletSpawned;
     public bool isShot = false;
+    public int ammo;
     public float waitTime;
+    public PlayerController pController;
 
 
     private void Update()
@@ -30,7 +32,6 @@ public class Gun_Controller : MonoBehaviour
         {
             //Para que la bala avance en dirección al cursor
             bulletSpawned = Instantiate(bulletPrefab.transform, bulletSpawnPoint[i].transform.position, bulletSpawnPoint[i].transform.rotation);
-                   
         }
     }
 

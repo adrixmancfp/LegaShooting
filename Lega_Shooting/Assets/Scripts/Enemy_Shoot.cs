@@ -8,7 +8,10 @@ public class Enemy_Shoot : MonoBehaviour
     public GameObject[] bulletSpawnPoint;
     private Transform playerPosition;
     public float speed = 100f;
-    public float shootWaitTime;
+    public float shootWaitTime, distanceToPlayer;
+    public bool isShoted = true;
+
+    public float distanceToFollowPlayer = 10;
 
     private void Start()
     {
@@ -19,7 +22,14 @@ public class Enemy_Shoot : MonoBehaviour
 
     private void Update()
     {
-        
+        CheckObstacles();
+        distanceToPlayer = Vector3.Distance(transform.position, playerPosition.transform.position);
+
+        if (CheckObstacles() && (isShoted) && distanceToPlayer <= distanceToFollowPlayer)
+        {
+            Invoke("ShootPlayer", shootWaitTime);
+            isShoted = false;
+        }
     }
 
     void ShootPlayer()
@@ -32,8 +42,29 @@ public class Enemy_Shoot : MonoBehaviour
             newBullet = Instantiate(bulletPrefab, bulletSpawnPoint[i].transform.position, bulletSpawnPoint[i].transform.rotation);
             newBullet.GetComponent<Rigidbody>().AddForce(playerDirection * speed, ForceMode.Force);
         }
-
-        Invoke("ShootPlayer", shootWaitTime);
+        isShoted = true;
 
     }
+
+    public bool CheckObstacles()
+    {
+        bool res = false;
+        Vector3 rayOrigin = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, gameObject.transform.position.z);
+        Vector3 rayDirection = new Vector3(playerPosition.transform.position.x, playerPosition.transform.position.y + 1, playerPosition.transform.position.z);
+        rayDirection -= rayOrigin;
+        Ray ray = new Ray(rayOrigin, rayDirection);
+        Debug.DrawRay(rayOrigin, rayDirection);
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            {
+                res = true;
+            }
+        }
+        return res;
+    }
+
+
 }
