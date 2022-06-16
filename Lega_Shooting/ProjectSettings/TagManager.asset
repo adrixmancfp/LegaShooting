@@ -9,6 +9,9 @@ TagManager:
   - Gun
   - Enemy
   - Wall
+  - Rifle
+  - Shotgun
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -19,8 +22,8 @@ TagManager:
   - Bullet
   - Gun
   - Enemy
-  - 
-  - 
+  - Shotgun
+  - Rifle
   - 
   - 
   - 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Gun_Controller : MonoBehaviour
 {
     public Bullet bulletPrefab;
-    public GameObject bulletSpawnPoint;
+    public GameObject[] bulletSpawnPoint;
     public GameObject bullet;
     private Transform bulletSpawned;
     public bool isShot = false;
@@ -21,21 +21,23 @@ public class Gun_Controller : MonoBehaviour
             Invoke("isShoted", waitTime);
             isShot = true;
         }
-
     }
 
 
     private void Shoot()
     {
-        //Para que la bala avance en dirección al cursor
-        bulletSpawned = Instantiate(bulletPrefab.transform, bulletSpawnPoint.transform.position, Quaternion.identity);
-        bulletSpawned.rotation = bulletSpawnPoint.transform.rotation;
+        for (int i = 0; i < bulletSpawnPoint.Length; i++)
+        {
+            //Para que la bala avance en dirección al cursor
+            bulletSpawned = Instantiate(bulletPrefab.transform, bulletSpawnPoint[i].transform.position, bulletSpawnPoint[i].transform.rotation);
+                   
+        }
     }
-
 
     private void isShoted()
     {
         isShot = false;
     }
+
 
 }

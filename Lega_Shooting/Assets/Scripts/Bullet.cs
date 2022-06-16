@@ -5,8 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed;
-    private Rigidbody _rb;
-
+    private Rigidbody _rb;    
     public float maxDistance;
 
     void Start()
@@ -15,37 +14,42 @@ public class Bullet : MonoBehaviour
     }
 
 
-    void Update()
+    /*void Update()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
         maxDistance += 1 * Time.deltaTime;
+
         if (maxDistance > 3)
         {
             Destroy(this.gameObject);
         }
-    }
+    }*/
 
-    /*private void FixedUpdate()
+    private void FixedUpdate()
     {
         _rb.velocity = transform.forward * speed;
+
+
         maxDistance += 1 * Time.deltaTime;
+
         if (maxDistance > 3)
         {
             Destroy(this.gameObject);
         }
+
         //moveDirection.Normalize();
+
         //_rb.AddForce(speed * moveDirection);
-    }*/
+    }
 
     private void OnTriggerEnter(Collider other)
     {
 
 
-
-        if (other.CompareTag("Player"))
+       /* if (other.CompareTag("Player"))
         {
-            //Destroy(other.gameObject);
-        }
+            Destroy(other.gameObject);
+        }*/
 
         if (other.CompareTag("Enemy"))
         {
@@ -53,10 +57,11 @@ public class Bullet : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (other.CompareTag("Wall"))
+        if (other.CompareTag("Obstacle"))
         {
             Destroy(this.gameObject);
         }
     }
+
 
 }

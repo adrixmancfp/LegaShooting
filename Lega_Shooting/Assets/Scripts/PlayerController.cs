@@ -5,18 +5,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
-    public float speed, rotationSpeed, staAct;
+    public float speed, rotationSpeed;
     Vector3 rbVel;
-    public Stamina stamina;
+    //public Opciones opciones;
     public bool move;
     public GameObject[] weapons;
-    private Vector3 moveDirection;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         rbVel = _rb.velocity;
-        staAct = 20f;
     }
 
 
@@ -27,7 +25,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if ((Input.GetKeyDown(KeyCode.W)) && (Input.GetKeyDown(KeyCode.A)) && (Input.GetKeyDown(KeyCode.S)) && (Input.GetKeyDown(KeyCode.D)))
         {
             move = true;
@@ -36,27 +33,23 @@ public class PlayerController : MonoBehaviour
         {
             move = false;
         }
-
-        if ((Input.GetKeyDown(KeyCode.Space)) && (staAct < Stamina.instance.staminaActual))
-        {
-            PlayerDash(staAct, moveDirection);
-        }
-
         PlayerMovement();
 
 
     }
 
-    private void OnTriggerStay(Collider other)
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Shotgun") && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("Shotgun"))
         {
             Destroy(other.gameObject);
             weapons[0].SetActive(false);
             weapons[1].SetActive(true);
             weapons[2].SetActive(false);
         }
-        if (other.CompareTag("Rifle") && Input.GetKeyDown(KeyCode.E))
+        if (other.CompareTag("Rifle"))
         {
             Destroy(other.gameObject);
             weapons[0].SetActive(false);
@@ -76,20 +69,11 @@ public class PlayerController : MonoBehaviour
             StopPlayer();
         }
 
-        moveDirection = Vector3.forward * vertical + Vector3.right * horizontal;
+        Vector3 moveDirection = Vector3.forward * vertical + Vector3.right * horizontal;
 
         moveDirection.Normalize();
 
         _rb.AddForce(speed * moveDirection);
-
-    }
-
-
-    private void PlayerDash(float dash, Vector3 moveDash)
-    {
-
-        _rb.AddForce(moveDash * dash * 10, ForceMode.Impulse);
-        Stamina.instance.UseStamina(dash);
 
     }
 
@@ -117,5 +101,6 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
     }
+
 
 }
