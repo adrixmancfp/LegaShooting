@@ -5,28 +5,26 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
-    public float speed, rotationSpeed;
+    public float speed, rotationSpeed, staAct, acc;
     Vector3 rbVel;
     //public Opciones opciones;
-    public bool move;
+    public bool move, dash;
     public int ammo;
     public GameObject[] weapons;
+    private Vector3 moveDirection;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         rbVel = _rb.velocity;
+        staAct = 20f;
     }
 
 
     private void Update()
     {
         PlayerRotation();
-    }
-
-    private void FixedUpdate()
-    {
-        if ((Input.GetKeyDown(KeyCode.W)) && (Input.GetKeyDown(KeyCode.A)) && (Input.GetKeyDown(KeyCode.S)) && (Input.GetKeyDown(KeyCode.D)))
+        if ((Input.GetAxisRaw("Vertical") != 0) || (Input.GetAxisRaw("Horizontal") != 0))
         {
             move = true;
         }
@@ -34,9 +32,24 @@ public class PlayerController : MonoBehaviour
         {
             move = false;
         }
+        if ((Input.GetKeyDown(KeyCode.LeftShift)) && (staAct < Stamina.instance.staminaActual))
+        {
+            dash = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (dash == true)
+        {
+            PlayerDash(staAct, moveDirection);
+            Invoke("StopPlayer", 0.1f);
+            Debug.Log("Dash");
+            dash = false;
+        }
+
         PlayerMovement();
-
-
     }
 
 
@@ -77,12 +90,21 @@ public class PlayerController : MonoBehaviour
             StopPlayer();
         }
 
-        Vector3 moveDirection = Vector3.forward * vertical + Vector3.right * horizontal;
+        moveDirection = Vector3.forward * vertical + Vector3.right * horizontal;
 
         moveDirection.Normalize();
 
-        _rb.AddForce(speed * moveDirection);
+        _rb.AddForce(acc * moveDirection);
 
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, speed);
+
+    }
+
+    private void PlayerDash(float dash, Vector3 moveDash)
+    {
+
+        _rb.AddForce(moveDash * dash * 3, ForceMode.Impulse);
+        Stamina.instance.UseStamina(dash);
     }
 
     private void PlayerRotation()

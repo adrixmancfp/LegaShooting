@@ -17,10 +17,11 @@ public class Gun_Controller : MonoBehaviour
     private void Update()
     {
         float shoot = Input.GetAxis("Fire1");
-        if ((shoot > 0.1f) && (isShot == false))
+        if ((shoot > 0.1f) && (isShot == false) && (ammo > 0))
         {
             Shoot();
             Invoke("isShoted", waitTime);
+            ammo--;
             isShot = true;
         }
     }
