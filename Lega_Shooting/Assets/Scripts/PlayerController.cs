@@ -46,19 +46,19 @@ public class PlayerController : MonoBehaviour
             {
                 GetWeapon(0, nameWeapon);
                 gun.ammo = 12;
-                GameManager.Instance.reloadAmmo(gun.ammo);
+                GameManager.Instance.ReloadAmmo(gun.ammo);
             }
             else if (isPickableShotgun)
             {
                 GetWeapon(1, nameWeapon);
                 shotgun.ammo = 8;
-                GameManager.Instance.reloadAmmo(shotgun.ammo);
+                GameManager.Instance.ReloadAmmo(shotgun.ammo);
             }
             else if (isPickableRifle)
             {
                 rifle.ammo = 30;
                 GetWeapon(2, nameWeapon);
-                GameManager.Instance.reloadAmmo(rifle.ammo);
+                GameManager.Instance.ReloadAmmo(rifle.ammo);
             }
         }
 

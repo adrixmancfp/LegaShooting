@@ -6,6 +6,7 @@ public class Enemy_Shoot : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public GameObject[] bulletSpawnPoint;
+    public AudioClip clip;
     private Transform playerPosition;
     public float speed = 100f;
     public float shootWaitTime, distanceToPlayer;
@@ -28,6 +29,7 @@ public class Enemy_Shoot : MonoBehaviour
         if (CheckObstacles() && (isShoted) && distanceToPlayer <= distanceToFollowPlayer)
         {
             Invoke("ShootPlayer", shootWaitTime);
+            GetComponent<AudioSource>().PlayOneShot(clip);
             isShoted = false;
         }
     }

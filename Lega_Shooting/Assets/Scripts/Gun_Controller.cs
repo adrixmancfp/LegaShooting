@@ -25,7 +25,7 @@ public class Gun_Controller : MonoBehaviour
             Invoke("isShoted", waitTime);
             GetComponent<AudioSource>().PlayOneShot(clip);
             ammo--;
-            GameManager.Instance.shootAmmo(ammo);
+            GameManager.Instance.ShootAmmo(ammo);
             isShot = true;
         }
     }

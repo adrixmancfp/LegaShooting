@@ -10,11 +10,16 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
-    [Header("Municion")]
+    public GameObject enemiesContainer;
+    [Header("Munición")]
+    [SerializeField] private GameObject winCanvas;
+    [SerializeField] private GameObject lossCanvas;
     [SerializeField] private GameObject ammoCanvas;
-    [SerializeField] private GameObject initialMenu;
+    [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private TMP_Text maxAmmoTMP;
     [SerializeField] private TMP_Text actAmmoTMP;
+    [HideInInspector] public int enemyCount, enemyTotal;
+    [HideInInspector] public bool gameOver;
 
     private void Awake()
     {
@@ -29,36 +34,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    
     void Start()
     {
-        reloadAmmo(12);
-        initialMenu.SetActive(false);
+        ReloadAmmo(12);
+        pauseCanvas.SetActive(false);
         ammoCanvas.SetActive(false);
-        Time.timeScale = 1;
+
+        enemyTotal = enemiesContainer.transform.childCount;
+
+        
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Time.timeScale == 1)
-            {
-                initialMenu.SetActive(true);
-                Time.timeScale = 0;
-            }
-            else
-            {
-                initialMenu.SetActive(false);
-                Time.timeScale = 1;
-            }
+            PauseGame();
         }
     }
 
-    public void reloadAmmo(int maxAmmo)
+    public void ReloadAmmo(int maxAmmo)
     {
         ammoCanvas.SetActive(true);
         if (maxAmmo > 10)
@@ -72,15 +69,86 @@ public class GameManager : MonoBehaviour
         actAmmoTMP.text = maxAmmo.ToString();
     }
 
-    public void shootAmmo(int actAmmo)
+    public void ShootAmmo(int actAmmo)
     {
         actAmmoTMP.text = actAmmo.ToString();
     }
 
+    private void PauseGame()
+    {
+        if (Time.timeScale == 1)
+        {
+            pauseCanvas.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            pauseCanvas.SetActive(false);
+            Time.timeScale = 1;
+        }
+    }
+
     public void Iniciar()
     {
-        initialMenu.SetActive(false);
+        pauseCanvas.SetActive(false);
         Time.timeScale = 1;
     }
+
+    public void CountEnemy()
+    {
+        enemyCount++;
+        CheckWin();
+    }
+
+    public void CheckWin()
+    {
+        if (enemyCount >= enemyTotal)
+        {
+            GameOver();
+            winCanvas.SetActive(true);
+        }
+    }
+    public void GameWon()
+    {
+        GameOver();
+
+        winCanvas.SetActive(true);
+    }
+
+
+
+    public void GameLoss()
+    {
+        GameOver();
+        lossCanvas.SetActive(true);
+    }
+
+    public void GameOver()
+    {
+        gameOver = true;
+
+    }
+    public void NextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);        
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+        Debug.Log("Has salido del juego.");
+    }
+
+    public void ExitToMenu()
+    {
+         SceneManager.LoadScene(0);
+    }
+
 
 }
