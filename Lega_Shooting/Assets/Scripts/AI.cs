@@ -7,7 +7,8 @@ public class AI : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;
     public Transform[] destinations;
-
+    //public GameObject explosion;
+    public GameObject droppedWeapon;
     public float distanceToFollowPath = 2;
 
     private int i = 0;
@@ -15,7 +16,6 @@ public class AI : MonoBehaviour
 
     [Header("--Follow Player--")]
     public bool followPlayer;
-
     private GameObject player;
     private float distanceToPlayer;
 
@@ -30,7 +30,7 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position); 
+        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (distanceToPlayer <= distanceToFollowPlayer && followPlayer)
         {
@@ -42,6 +42,17 @@ public class AI : MonoBehaviour
             EnemyPath();
         }
     }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            EnemyDeath();
+        }
+    }
+
 
     public void EnemyPath()
     {
@@ -63,5 +74,16 @@ public class AI : MonoBehaviour
     {
         navMeshAgent.destination = player.transform.position;
     }
-    
+
+
+    private void EnemyDeath()
+    {
+        //GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+
+        //Destroy(newExplosion, 2);
+
+        GameObject newDroppedWeapon = Instantiate(this.droppedWeapon, this.transform.position, Quaternion.identity);
+    }
+
+
 }

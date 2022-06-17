@@ -10,9 +10,12 @@ public class PlayerController : MonoBehaviour
     //public Opciones opciones;
     public bool move, dash;
     public int ammo;
+    public string nameWeapon;
     public GameObject[] weapons;
+    public GameObject arma;
     private Vector3 moveDirection;
-
+    public bool isPickableShotgun, isPickableGun, isPickableRifle;
+    public Gun_Controller gun, shotgun, rifle;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -36,6 +39,25 @@ public class PlayerController : MonoBehaviour
         {
             dash = true;
         }
+        if ((Input.GetKeyDown(KeyCode.E)) && (nameWeapon != null))
+        {
+            if (isPickableGun)
+            {
+                GetWeapon(0, nameWeapon);
+                Debug.Log("Coge pipa: ");
+                gun.ammo = 12;
+            } else if (isPickableShotgun)
+            {
+                GetWeapon(1, nameWeapon);
+                Debug.Log("Coge escopeta: ");
+                shotgun.ammo = 8;
+            } else if (isPickableRifle)
+            {
+                rifle.ammo = 30;
+                GetWeapon(2, nameWeapon);
+                Debug.Log("Coge rifle: ");
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -56,26 +78,42 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Gun"))
+        {
+            isPickableGun = true;
+            nameWeapon = other.gameObject.name;
+            Debug.Log("Arma: " + nameWeapon);
+        }
         if (other.CompareTag("Shotgun"))
         {
-            Destroy(other.gameObject);
-            weapons[0].SetActive(false);
-            weapons[1].SetActive(true);
-            weapons[2].SetActive(false);
+            isPickableShotgun = true;
+            nameWeapon = other.gameObject.name;
+            Debug.Log("Arma: " + nameWeapon);
         }
         if (other.CompareTag("Rifle"))
         {
-            Destroy(other.gameObject);
-            weapons[0].SetActive(false);
-            weapons[1].SetActive(false);
-            weapons[2].SetActive(true);
+            isPickableRifle = true;
+            nameWeapon = other.gameObject.name;
+            Debug.Log("Arma: " + nameWeapon);
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
         if (other.CompareTag("Gun"))
         {
-            Destroy(other.gameObject);
-            weapons[0].SetActive(true);
-            weapons[1].SetActive(false);
-            weapons[2].SetActive(false);
+            isPickableGun = false;
+            nameWeapon = null;
+        }
+        if (other.CompareTag("Shotgun"))
+        {
+            isPickableShotgun = false;
+            nameWeapon = null;
+        }
+        if (other.CompareTag("Rifle"))
+        {
+            isPickableRifle = false;
+            nameWeapon = null;
         }
     }
 
@@ -98,6 +136,33 @@ public class PlayerController : MonoBehaviour
 
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, speed);
 
+    }
+
+    private void GetWeapon(int weapon, string name)
+    {
+        switch (weapon)
+        {
+            case 0:
+                weapons[0].SetActive(true);
+                weapons[1].SetActive(false);
+                weapons[2].SetActive(false);
+                break;
+            case 1:
+                weapons[0].SetActive(false);
+                weapons[1].SetActive(true);
+                weapons[2].SetActive(false);
+                break;
+            case 2:
+                weapons[0].SetActive(false);
+                weapons[1].SetActive(false);
+                weapons[2].SetActive(true);
+                break;
+        }
+        isPickableGun = false;
+        isPickableShotgun = false;
+        isPickableRifle = false;
+        arma = GameObject.Find(name);
+        Destroy(arma.gameObject);
     }
 
     private void PlayerDash(float dash, Vector3 moveDash)

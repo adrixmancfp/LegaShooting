@@ -312,6 +312,7 @@ MonoBehaviour:
   - {fileID: 2091894220}
   - {fileID: 1899422761}
   - {fileID: 1384631695}
+  droppedWeapon: {fileID: 1856537181}
   distanceToFollowPath: 2
   followPlayer: 1
   distanceToFollowPlayer: 10
@@ -519,6 +520,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6586107991176793859, guid: 013dd1d743f7b0f47a48278e920c68ec, type: 3}
   m_PrefabInstance: {fileID: 6316271552473695299}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &238667235 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6316271553519407702, guid: 013dd1d743f7b0f47a48278e920c68ec, type: 3}
+  m_PrefabInstance: {fileID: 6316271552473695299}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238667234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cd3a6ccbee6e74eb0b5a1be5a78498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &293005652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -898,6 +910,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 610923870}
   destinations:
   - {fileID: 610923868}
+  droppedWeapon: {fileID: 0}
   distanceToFollowPath: 2
   followPlayer: 0
   distanceToFollowPlayer: 10
@@ -1240,6 +1253,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 686355304}
   destinations:
   - {fileID: 686355301}
+  droppedWeapon: {fileID: 1586957545}
   distanceToFollowPath: 2
   followPlayer: 1
   distanceToFollowPlayer: 10
@@ -2086,6 +2100,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7745744252601247363, guid: e97025b88e9ccdd40b61c64173b6f224, type: 3}
   m_PrefabInstance: {fileID: 7475694500341030795}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1233690859 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7475694501271730920, guid: e97025b88e9ccdd40b61c64173b6f224, type: 3}
+  m_PrefabInstance: {fileID: 7475694500341030795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233690858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cd3a6ccbee6e74eb0b5a1be5a78498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &1320370319
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2264,10 +2289,18 @@ MonoBehaviour:
   move: 0
   dash: 0
   ammo: 0
+  nameWeapon: 
   weapons:
   - {fileID: 1896707578}
   - {fileID: 238667234}
   - {fileID: 1233690858}
+  arma: {fileID: 0}
+  isPickableShotgun: 0
+  isPickableGun: 0
+  isPickableRifle: 0
+  gun: {fileID: 1896707579}
+  shotgun: {fileID: 238667235}
+  rifle: {fileID: 1233690859}
 --- !u!136 &1355878398
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2805,6 +2838,7 @@ MonoBehaviour:
   navMeshAgent: {fileID: 1618845299}
   destinations:
   - {fileID: 1618845296}
+  droppedWeapon: {fileID: 178181345}
   distanceToFollowPath: 2
   followPlayer: 1
   distanceToFollowPlayer: 10
@@ -3251,6 +3285,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1471200134431383403, guid: 5847f21fb5414fb439464d5be75ec4a9, type: 3}
   m_PrefabInstance: {fileID: 1777700758359892860}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1896707579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1777700757391656498, guid: 5847f21fb5414fb439464d5be75ec4a9, type: 3}
+  m_PrefabInstance: {fileID: 1777700758359892860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896707578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cd3a6ccbee6e74eb0b5a1be5a78498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1899422760
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,6 +4224,10 @@ PrefabInstance:
       propertyPath: ammo
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1777700757391656498, guid: 5847f21fb5414fb439464d5be75ec4a9, type: 3}
+      propertyPath: pController
+      value: 
+      objectReference: {fileID: 1355878397}
     - target: {fileID: 2243091778850407889, guid: 5847f21fb5414fb439464d5be75ec4a9, type: 3}
       propertyPath: m_RootOrder
       value: 0
