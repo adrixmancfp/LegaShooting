@@ -7,7 +7,7 @@ public class AI : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent;
     public Transform[] destinations;
-    //public GameObject explosion;
+    public GameObject explosion;
     public GameObject droppedWeapon;
     public float distanceToFollowPath = 2;
 
@@ -78,9 +78,9 @@ public class AI : MonoBehaviour
 
     private void EnemyDeath()
     {
-        //GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+        GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
 
-        //Destroy(newExplosion, 2);
+        Destroy(newExplosion, 2);
 
         GameObject newDroppedWeapon = Instantiate(this.droppedWeapon, this.transform.position, Quaternion.identity);
     }

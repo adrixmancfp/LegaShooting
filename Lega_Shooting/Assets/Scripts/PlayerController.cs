@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
     public bool isPickableShotgun, isPickableGun, isPickableRifle;
     public Gun_Controller gun, shotgun, rifle;
+    public GameObject explosion;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -44,20 +45,23 @@ public class PlayerController : MonoBehaviour
             if (isPickableGun)
             {
                 GetWeapon(0, nameWeapon);
-                Debug.Log("Coge pipa: ");
                 gun.ammo = 12;
-            } else if (isPickableShotgun)
+                GameManager.Instance.reloadAmmo(gun.ammo);
+            }
+            else if (isPickableShotgun)
             {
                 GetWeapon(1, nameWeapon);
-                Debug.Log("Coge escopeta: ");
                 shotgun.ammo = 8;
-            } else if (isPickableRifle)
+                GameManager.Instance.reloadAmmo(shotgun.ammo);
+            }
+            else if (isPickableRifle)
             {
                 rifle.ammo = 30;
                 GetWeapon(2, nameWeapon);
-                Debug.Log("Coge rifle: ");
+                GameManager.Instance.reloadAmmo(rifle.ammo);
             }
         }
+
     }
 
     private void FixedUpdate()
@@ -95,6 +99,10 @@ public class PlayerController : MonoBehaviour
             isPickableRifle = true;
             nameWeapon = other.gameObject.name;
             Debug.Log("Arma: " + nameWeapon);
+        }
+        if (other.CompareTag("Bullet"))
+        {
+            PlayerDeath();
         }
     }
 
@@ -196,5 +204,11 @@ public class PlayerController : MonoBehaviour
         _rb.angularVelocity = Vector3.zero;
     }
 
+    private void PlayerDeath()
+    {
+        GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(newExplosion, 2);
+        Destroy(this.gameObject);
+    }
 
 }
