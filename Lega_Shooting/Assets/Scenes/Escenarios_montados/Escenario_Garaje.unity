@@ -281,6 +281,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2bca430ccb4d71449a55c13c68226fb4, type: 2}
+    - target: {fileID: 7024852167085896522, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 7574725825018735783, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1481,6 +1485,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 6652b3dd04ab3064b81d86d6f2fe7c0c, type: 2}
+    - target: {fileID: 7024852167085896522, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 7574725825018735783, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1803,6 +1811,10 @@ PrefabInstance:
       value: New Car (1)
       objectReference: {fileID: 0}
     - target: {fileID: 632161405121123607, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7024852167085896522, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
       propertyPath: m_TagString
       value: Obstacle
       objectReference: {fileID: 0}
@@ -4495,6 +4507,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 02b2d72b5e0ad4448bc91d1fc3e29ba6, type: 2}
+    - target: {fileID: 7024852167085896522, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 7574725825018735783, guid: bd270f5442d387d47b22cd361fa7b887, type: 3}
       propertyPath: m_RootOrder
       value: 19
