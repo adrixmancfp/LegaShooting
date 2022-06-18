@@ -78,11 +78,12 @@ public class AI : MonoBehaviour
 
     private void EnemyDeath()
     {
+        
+        GameManager.Instance.CountEnemy();
         GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
-
-        Destroy(newExplosion, 2);
-
         GameObject newDroppedWeapon = Instantiate(this.droppedWeapon, this.transform.position, Quaternion.identity);
+        Destroy(newExplosion, 2);
+        //Destroy(this.gameObject);
     }
 
 

@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winCanvas;
     [SerializeField] private GameObject lossCanvas;
     [SerializeField] private GameObject ammoCanvas;
-    [SerializeField] private GameObject pauseCanvas;
+    [SerializeField] private GameObject pauseCanvas;    
+    public GameObject pickUpCanvas;
     [SerializeField] private TMP_Text maxAmmoTMP;
     [SerializeField] private TMP_Text actAmmoTMP;
-    [HideInInspector] public int enemyCount, enemyTotal;
+    [SerializeField] private TMP_Text remainEnemiesTMP;
+    [HideInInspector] public int enemyCount, enemyTotal, enemyRemain;
     [HideInInspector] public bool gameOver;
 
     private void Awake()
@@ -37,13 +39,24 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Cursor.visible = true;
+        }
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+
+
         ReloadAmmo(12);
         pauseCanvas.SetActive(false);
         ammoCanvas.SetActive(false);
 
         enemyTotal = enemiesContainer.transform.childCount;
-
-        
+        enemyRemain = enemyTotal - enemyCount;
+        UpdateEnemiesCount();
     }
 
     
@@ -53,6 +66,7 @@ public class GameManager : MonoBehaviour
         {
             PauseGame();
         }
+        //Debug.Log("Enemigos restantes: {0} " + enemyRemain);
     }
 
     public void ReloadAmmo(int maxAmmo)
@@ -74,9 +88,9 @@ public class GameManager : MonoBehaviour
         actAmmoTMP.text = actAmmo.ToString();
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
-        if (Time.timeScale == 1)
+        if (Time.timeScale == 1 && !gameOver)
         {
             pauseCanvas.SetActive(true);
             Time.timeScale = 0;
@@ -97,15 +111,19 @@ public class GameManager : MonoBehaviour
     public void CountEnemy()
     {
         enemyCount++;
+        UpdateEnemiesCount();
         CheckWin();
     }
-
+    public void UpdateEnemiesCount()
+    {
+        enemyRemain = enemyTotal - enemyCount;
+        remainEnemiesTMP.text = "Enemigos restantes  " + enemyRemain.ToString("\t00");
+    }
     public void CheckWin()
     {
         if (enemyCount >= enemyTotal)
         {
-            GameOver();
-            winCanvas.SetActive(true);
+            GameWon();
         }
     }
     public void GameWon()

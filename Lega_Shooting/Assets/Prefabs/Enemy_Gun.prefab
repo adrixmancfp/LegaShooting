@@ -266,7 +266,7 @@ MonoBehaviour:
   destinations:
   - {fileID: 6795400532776038549}
   explosion: {fileID: 2421758413864528414, guid: d2eb2f7d99bedd24fa66a3a482acb97c, type: 3}
-  droppedWeapon: {fileID: 0}
+  droppedWeapon: {fileID: 4700157781894618120, guid: c2e5338c74116b343887bedadd411bfa, type: 3}
   distanceToFollowPath: 2
   followPlayer: 1
   distanceToFollowPlayer: 10

@@ -84,18 +84,21 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Gun"))
         {
+            GameManager.Instance.pickUpCanvas.SetActive(true); 
             isPickableGun = true;
             nameWeapon = other.gameObject.name;
             Debug.Log("Arma: " + nameWeapon);
         }
         if (other.CompareTag("Shotgun"))
         {
+            GameManager.Instance.pickUpCanvas.SetActive(true); 
             isPickableShotgun = true;
             nameWeapon = other.gameObject.name;
             Debug.Log("Arma: " + nameWeapon);
         }
         if (other.CompareTag("Rifle"))
         {
+            GameManager.Instance.pickUpCanvas.SetActive(true); 
             isPickableRifle = true;
             nameWeapon = other.gameObject.name;
             Debug.Log("Arma: " + nameWeapon);
@@ -110,16 +113,19 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Gun"))
         {
+            GameManager.Instance.pickUpCanvas.SetActive(false);
             isPickableGun = false;
             nameWeapon = null;
         }
         if (other.CompareTag("Shotgun"))
         {
+            GameManager.Instance.pickUpCanvas.SetActive(false);
             isPickableShotgun = false;
             nameWeapon = null;
         }
         if (other.CompareTag("Rifle"))
         {
+            GameManager.Instance.pickUpCanvas.SetActive(false);
             isPickableRifle = false;
             nameWeapon = null;
         }
@@ -171,6 +177,7 @@ public class PlayerController : MonoBehaviour
         isPickableRifle = false;
         arma = GameObject.Find(name);
         Destroy(arma.gameObject);
+        GameManager.Instance.pickUpCanvas.SetActive(false);
     }
 
     private void PlayerDash(float dash, Vector3 moveDash)
@@ -208,7 +215,8 @@ public class PlayerController : MonoBehaviour
     {
         GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(newExplosion, 2);
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        //GameManager.Instance.GameLoss();
     }
 
 }
