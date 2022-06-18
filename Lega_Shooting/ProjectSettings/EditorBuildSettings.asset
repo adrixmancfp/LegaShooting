@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Inicio.unity
     guid: d3e3589927118dd4da698a8c79e40767
   - enabled: 1
+    path: Assets/Scenes/Escenarios_montados/Escenario_Garaje.unity
+    guid: 4cf242a7206dc22409bab5a7c6f00681
+  - enabled: 1
+    path: "Assets/Scenes/Escenarios_montados/Escenario_Almac\xE9n.unity"
+    guid: eb3582f322a04674abdff96d49bfb8af
+  - enabled: 1
+    path: Assets/Scenes/Escenarios_montados/Escenario_Biblioteca.unity
+    guid: 0beacc34f481f6446bffa56b506c0a30
+  - enabled: 1
     path: Assets/Scenes/Prototipo.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

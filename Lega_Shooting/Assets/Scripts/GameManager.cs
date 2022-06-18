@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject lossCanvas;
     [SerializeField] private GameObject ammoCanvas;
     [SerializeField] private GameObject pauseCanvas;    
+    [SerializeField] private GameObject controlCanvas;    
+    [SerializeField] private GameObject gameCanvas;    
     public GameObject pickUpCanvas;
     [SerializeField] private TMP_Text maxAmmoTMP;
     [SerializeField] private TMP_Text actAmmoTMP;
@@ -47,6 +49,13 @@ public class GameManager : MonoBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            controlCanvas.SetActive(true);
+            
+            Time.timeScale = 0;
         }
 
 
@@ -102,9 +111,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Iniciar()
+    public void BeginGame()
     {
-        pauseCanvas.SetActive(false);
+        controlCanvas.SetActive(false);
+
         Time.timeScale = 1;
     }
 
@@ -152,6 +162,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene(4);
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);        
@@ -165,7 +180,8 @@ public class GameManager : MonoBehaviour
 
     public void ExitToMenu()
     {
-         SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 
 
