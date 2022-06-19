@@ -6,19 +6,22 @@ public class Enemy_Shoot : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public GameObject[] bulletSpawnPoint;
+    public AudioSource audioSource;
     public AudioClip clip;
     private Transform playerPosition;
     public float speed = 100f;
     public float shootWaitTime, distanceToPlayer;
-    public bool isShoted = true;
+    public bool isShoted = true, avoidShoot = true;
 
     public float distanceToFollowPlayer = 10;
 
     private void Start()
     {
         playerPosition = FindObjectOfType<PlayerController>().transform;
-
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0;
         Invoke("ShootPlayer", 0);
+        Invoke("EvitarDisparoInicial", 1.8f);
     }
 
     private void Update()
@@ -29,7 +32,7 @@ public class Enemy_Shoot : MonoBehaviour
         if (CheckObstacles() && (isShoted) && distanceToPlayer <= distanceToFollowPlayer)
         {
             Invoke("ShootPlayer", shootWaitTime);
-            GetComponent<AudioSource>().PlayOneShot(clip);
+            audioSource.PlayOneShot(clip);
             isShoted = false;
         }
     }
@@ -45,7 +48,6 @@ public class Enemy_Shoot : MonoBehaviour
             newBullet.GetComponent<Rigidbody>().AddForce(playerDirection * speed, ForceMode.Force);
         }
         isShoted = true;
-
     }
 
     public bool CheckObstacles()
@@ -66,6 +68,11 @@ public class Enemy_Shoot : MonoBehaviour
             }
         }
         return res;
+    }
+
+    private void EvitarDisparoInicial()
+    {
+        audioSource.volume = .1f;
     }
 
 

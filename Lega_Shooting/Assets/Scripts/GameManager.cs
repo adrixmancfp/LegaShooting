@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 
@@ -10,17 +11,26 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
+    public GameObject crosshair;
     public GameObject enemiesContainer;
     [Header("Munición")]
+    [SerializeField] private GameObject ammoCanvas;
+    [SerializeField] private TMP_Text maxAmmoTMP;
+    [SerializeField] private TMP_Text actAmmoTMP;
+    [Header("Canvas Win Loss Pause")]
     [SerializeField] private GameObject winCanvas;
     [SerializeField] private GameObject lossCanvas;
-    [SerializeField] private GameObject ammoCanvas;
-    [SerializeField] private GameObject pauseCanvas;    
+    [SerializeField] private GameObject pauseCanvasGlob;
+    [Header("Opciones")]
+    [SerializeField] private GameObject pauseCanvas;
+    [SerializeField] private GameObject opcionCanvas;
+    [SerializeField] private Toggle fullScreen;
+    [SerializeField] private TMP_Dropdown resolucionesDropDown;
+    [SerializeField] private Resolution[] resoluciones;
+    [Header("")]
     [SerializeField] private GameObject controlCanvas;    
     [SerializeField] private GameObject gameCanvas;    
     public GameObject pickUpCanvas;
-    [SerializeField] private TMP_Text maxAmmoTMP;
-    [SerializeField] private TMP_Text actAmmoTMP;
     [SerializeField] private TMP_Text remainEnemiesTMP;
     [HideInInspector] public int enemyCount, enemyTotal, enemyRemain;
     [HideInInspector] public bool gameOver;
@@ -54,18 +64,29 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 4)
         {
             controlCanvas.SetActive(true);
-            
             Time.timeScale = 0;
         }
 
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            
+            if (Screen.fullScreen)
+            {
+                fullScreen.isOn = true;
+            }
+            else
+            {
+                fullScreen.isOn = false;
+            }
+            RevisarResolucion();
+            ReloadAmmo(12);
+            pauseCanvasGlob.SetActive(false);
+            ammoCanvas.SetActive(false);
 
-        ReloadAmmo(12);
-        pauseCanvas.SetActive(false);
-        ammoCanvas.SetActive(false);
-
-        enemyTotal = enemiesContainer.transform.childCount;
-        enemyRemain = enemyTotal - enemyCount;
-        UpdateEnemiesCount();
+            enemyTotal = enemiesContainer.transform.childCount;
+            enemyRemain = enemyTotal - enemyCount;
+            UpdateEnemiesCount();
+        }
     }
 
     
@@ -101,12 +122,15 @@ public class GameManager : MonoBehaviour
     {
         if (Time.timeScale == 1 && !gameOver)
         {
-            pauseCanvas.SetActive(true);
+            pauseCanvasGlob.SetActive(true);
             Time.timeScale = 0;
         }
         else
         {
-            pauseCanvas.SetActive(false);
+            pauseCanvasGlob.SetActive(false);
+            pauseCanvas.SetActive(true);
+            opcionCanvas.SetActive(false);
+            CambioCursorOff();
             Time.timeScale = 1;
         }
     }
@@ -114,7 +138,7 @@ public class GameManager : MonoBehaviour
     public void BeginGame()
     {
         controlCanvas.SetActive(false);
-
+        CambioCursorOff();
         Time.timeScale = 1;
     }
 
@@ -124,11 +148,13 @@ public class GameManager : MonoBehaviour
         UpdateEnemiesCount();
         CheckWin();
     }
+
     public void UpdateEnemiesCount()
     {
         enemyRemain = enemyTotal - enemyCount;
-        remainEnemiesTMP.text = "Enemigos restantes  " + enemyRemain.ToString("\t00");
+        remainEnemiesTMP.text = "Enemigos restantes" + enemyRemain.ToString("\n0");
     }
+
     public void CheckWin()
     {
         if (enemyCount >= enemyTotal)
@@ -136,14 +162,13 @@ public class GameManager : MonoBehaviour
             GameWon();
         }
     }
+
     public void GameWon()
     {
         GameOver();
 
         winCanvas.SetActive(true);
     }
-
-
 
     public void GameLoss()
     {
@@ -156,15 +181,20 @@ public class GameManager : MonoBehaviour
         gameOver = true;
 
     }
+
     public void NextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
     }
 
     public void LoadTutorial()
     {
         SceneManager.LoadScene(4);
+    }
+
+    public void SigTuto()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public void RestartLevel()
@@ -184,5 +214,76 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void CambioCursorOn()
+    {
+        crosshair.SetActive(false);
+        Cursor.visible = true;
+    }
+
+    public void CambioCursorOff()
+    {
+        crosshair.SetActive(true);
+        Cursor.visible = false;
+    }
+
+    public void FullScreen()
+    {
+        if (fullScreen.isOn == true)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+    }
+    
+    public void ActivarOpciones()
+    {
+        opcionCanvas.SetActive(true);
+        pauseCanvas.SetActive(false);
+    }
+    
+    public void DesactivarOpciones()
+    {
+        opcionCanvas.SetActive(false);
+        pauseCanvas.SetActive(true);
+    }
+
+    public void RevisarResolucion()
+    {
+        resoluciones = Screen.resolutions;
+        resolucionesDropDown.ClearOptions();
+        List<string> opciones = new List<string>();
+        int resolucionAct = 0;
+
+        for (int i = 0; i < resoluciones.Length; i++)
+        {
+            string opcion = resoluciones[i].width + "x" + resoluciones[i].height /*+ " " + resoluciones[i].refreshRate + "fps"*/;
+            if ((resoluciones[i].refreshRate > 59) && (resoluciones[i].refreshRate < 61))
+            {
+                opciones.Add(opcion);
+            }
+
+            if ((Screen.fullScreen) && (resoluciones[i].width == Screen.currentResolution.width) && (resoluciones[i].height == Screen.currentResolution.height))
+            {
+                resolucionAct++;
+            }
+        }
+
+        resolucionesDropDown.AddOptions(opciones);
+        resolucionesDropDown.value = resolucionAct;
+        resolucionesDropDown.RefreshShownValue();
+
+        resolucionesDropDown.value = PlayerPrefs.GetInt("numeroResolucion", 0);
+    }
+
+    public void CambiarResolucion(int indiceResolucion)
+    {
+        PlayerPrefs.SetInt("numeroResolucion", resolucionesDropDown.value);
+
+        Resolution resolucion = resoluciones[resolucionesDropDown.value];
+        Screen.SetResolution(resolucion.width, resolucion.height, Screen.fullScreen);
+    }
 
 }

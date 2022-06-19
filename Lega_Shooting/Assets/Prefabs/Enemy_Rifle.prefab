@@ -148,7 +148,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cc6bd0470567ebe41a0193ead2a31fb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -214,11 +214,13 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3672217623183080177, guid: 25c812b56d8933341b2ff5700b584ba6, type: 3}
   bulletSpawnPoint:
   - {fileID: 6457225094208515619}
+  audioSource: {fileID: 0}
   clip: {fileID: 8300000, guid: 85ed5a0be406bb74a86dcd1f08798913, type: 3}
   speed: 100
   shootWaitTime: 0.1
   distanceToPlayer: 0
   isShoted: 0
+  avoidShoot: 1
   distanceToFollowPlayer: 10
 --- !u!114 &6457225093563919471
 MonoBehaviour:
@@ -234,13 +236,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 6457225093563919470}
   destinations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6457225093027980610}
   explosion: {fileID: 2421758413864528414, guid: d2eb2f7d99bedd24fa66a3a482acb97c, type: 3}
   droppedWeapon: {fileID: 972546835348223551, guid: 6de6366e7a9c5f042a9292fd4370a7e8, type: 3}
   distanceToFollowPath: 2
+  dropWeapon: 0
+  enemyDeath: 0
   followPlayer: 1
   distanceToFollowPlayer: 10
 --- !u!195 &6457225093563919470
@@ -277,7 +278,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 85ed5a0be406bb74a86dcd1f08798913, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3c8c7bb40da8df44aa572c7851df0a43, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,11 +121,13 @@ MonoBehaviour:
   - {fileID: 874008420530257750}
   - {fileID: 874008421845390543}
   - {fileID: 874008421843907162}
+  audioSource: {fileID: 0}
   clip: {fileID: 8300000, guid: 87f18247a0000104e96f32095f02a79a, type: 3}
   speed: 100
   shootWaitTime: 1.5
   distanceToPlayer: 0
   isShoted: 0
+  avoidShoot: 1
   distanceToFollowPlayer: 10
 --- !u!114 &874008420296660938
 MonoBehaviour:
@@ -145,6 +147,8 @@ MonoBehaviour:
   explosion: {fileID: 2421758413864528414, guid: d2eb2f7d99bedd24fa66a3a482acb97c, type: 3}
   droppedWeapon: {fileID: 7376156406268089742, guid: 665668cfbd8b5a84e8aa76fe53091a25, type: 3}
   distanceToFollowPath: 2
+  dropWeapon: 0
+  enemyDeath: 0
   followPlayer: 1
   distanceToFollowPlayer: 10
 --- !u!195 &874008420296660949
@@ -194,7 +198,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 87f18247a0000104e96f32095f02a79a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

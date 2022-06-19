@@ -10,6 +10,7 @@ public class AI : MonoBehaviour
     public GameObject explosion;
     public GameObject droppedWeapon;
     public float distanceToFollowPath = 2;
+    public bool dropWeapon = false, enemyDeath = false;
 
     private int i = 0;
 
@@ -78,10 +79,17 @@ public class AI : MonoBehaviour
 
     private void EnemyDeath()
     {
-        
-        GameManager.Instance.CountEnemy();
+        if (!enemyDeath)
+        {
+            GameManager.Instance.CountEnemy();
+            enemyDeath = true;
+        }
+        if ((!dropWeapon) && (droppedWeapon != null))
+        {
+            Instantiate(droppedWeapon, new Vector3(transform.position.x, 1.44f, transform.position.z), Quaternion.identity);
+            dropWeapon = true;
+        }
         GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
-        GameObject newDroppedWeapon = Instantiate(this.droppedWeapon, this.transform.position, Quaternion.identity);
         Destroy(newExplosion, 2);
         //Destroy(this.gameObject);
     }
