@@ -14,17 +14,6 @@ public class Bullet : MonoBehaviour
     }
 
 
-    /*void Update()
-    {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        maxDistance += 1 * Time.deltaTime;
-
-        if (maxDistance > 3)
-        {
-            Destroy(this.gameObject);
-        }
-    }*/
-
     private void FixedUpdate()
     {
         _rb.velocity = transform.forward * speed;
@@ -37,9 +26,7 @@ public class Bullet : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        //moveDirection.Normalize();
-
-        //_rb.AddForce(speed * moveDirection);
+        
     }
 
     private void OnTriggerEnter(Collider other)

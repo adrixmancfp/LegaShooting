@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            //DontDestroyOnLoad(this);
+            
         }
         else
         {
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         {
             PauseGame();
         }
-        //Debug.Log("Enemigos restantes: {0} " + enemyRemain);
+        
     }
 
     public void ReloadAmmo(int maxAmmo)
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-        Debug.Log("Has salido del juego.");
+        
     }
 
     public void ExitToMenu()
@@ -260,10 +260,9 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < resoluciones.Length; i++)
         {
             string opcion = resoluciones[i].width + "x" + resoluciones[i].height /*+ " " + resoluciones[i].refreshRate + "fps"*/;
-            if ((resoluciones[i].refreshRate > 59) && (resoluciones[i].refreshRate < 61))
-            {
-                opciones.Add(opcion);
-            }
+
+            opciones.Add(opcion);
+
 
             if ((Screen.fullScreen) && (resoluciones[i].width == Screen.currentResolution.width) && (resoluciones[i].height == Screen.currentResolution.height))
             {

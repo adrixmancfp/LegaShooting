@@ -91,7 +91,7 @@ public class AI : MonoBehaviour
         }
         GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(newExplosion, 2);
-        //Destroy(this.gameObject);
+  
     }
 
 

@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     public float speed, rotationSpeed, staAct, acc;
     Vector3 rbVel;
-    //public Opciones opciones;
     public bool move, dash;
     public int ammo;
     public string nameWeapon;
@@ -71,7 +70,6 @@ public class PlayerController : MonoBehaviour
         {
             PlayerDash(staAct, moveDirection);
             Invoke("StopPlayer", 0.1f);
-            Debug.Log("Dash");
             dash = false;
         }
 
@@ -87,21 +85,21 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.pickUpCanvas.SetActive(true); 
             isPickableGun = true;
             nameWeapon = other.gameObject.name;
-            Debug.Log("Arma: " + nameWeapon);
+            
         }
         if (other.CompareTag("Shotgun"))
         {
             GameManager.Instance.pickUpCanvas.SetActive(true); 
             isPickableShotgun = true;
             nameWeapon = other.gameObject.name;
-            Debug.Log("Arma: " + nameWeapon);
+            
         }
         if (other.CompareTag("Rifle"))
         {
             GameManager.Instance.pickUpCanvas.SetActive(true); 
             isPickableRifle = true;
             nameWeapon = other.gameObject.name;
-            Debug.Log("Arma: " + nameWeapon);
+            
         }
         if (other.CompareTag("Bullet"))
         {
@@ -215,8 +213,8 @@ public class PlayerController : MonoBehaviour
     {
         GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(newExplosion, 2);
-        //Destroy(this.gameObject);
-        //GameManager.Instance.GameLoss();
+        Destroy(this.gameObject);
+        GameManager.Instance.GameLoss();
     }
 
 }
